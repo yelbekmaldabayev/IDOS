@@ -1,0 +1,223 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String?
+  password        String?
+  avatar          String?
+  role            Role      @default(DEVELOPER)
+  status          UserStatus @default(ACTIVE)
+  emailVerified   DateTime?
+  lastSignInAt    DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  games           Game[]
+  analytics       UserAnalytics[]
+  nftTransactions NFTTransaction[]
+  apiKeys         ApiKey[]
+  wallets         Wallet[]
+  
+  @@map("users")
+}
+
+model Game {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  genre       String
+  platform    String   // "Web,Mobile,Desktop" - comma separated
+  status      GameStatus @default(DEVELOPMENT)
+  imageUrl    String?
+  revenue     Float      @default(0)
+  totalUsers  Int        @default(0)
+  activeUsers Int        @default(0)
+  downloads   Int        @default(0)
+  rating      Float      @default(0)
+  developerId String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  // Relations
+  developer   User              @relation(fields: [developerId], references: [id], onDelete: Cascade)
+  analytics   GameAnalytics[]
+  nfts        NFT[]
+  reviews     GameReview[]
+  
+  @@map("games")
+}
+
+model GameAnalytics {
+  id          String   @id @default(cuid())
+  gameId      String
+  date        DateTime
+  activeUsers Int      @default(0)
+  newUsers    Int      @default(0)
+  revenue     Float    @default(0)
+  downloads   Int      @default(0)
+  playtime    Int      @default(0) // in minutes
+  retention1d Float    @default(0) // 1-day retention rate
+  retention7d Float    @default(0) // 7-day retention rate
+  retention30d Float   @default(0) // 30-day retention rate
+  
+  // Relations
+  game        Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  
+  @@unique([gameId, date])
+  @@map("game_analytics")
+}
+
+model UserAnalytics {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime
+  gamesPlayed Int    @default(0)
+  playtime  Int      @default(0) // in minutes
+  spent     Float    @default(0)
+  nftsBought Int     @default(0)
+  
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, date])
+  @@map("user_analytics")
+}
+
+model NFT {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  price       Float
+  rarity      NFTRarity @default(COMMON)
+  gameId      String
+  createdAt   DateTime  @default(now())
+  
+  // Relations
+  game         Game             @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  transactions NFTTransaction[]
+  
+  @@map("nfts")
+}
+
+model NFTTransaction {
+  id        String            @id @default(cuid())
+  nftId     String
+  userId    String
+  type      TransactionType
+  price     Float
+  status    TransactionStatus @default(PENDING)
+  txHash    String?           // blockchain transaction hash
+  createdAt DateTime          @default(now())
+  
+  // Relations
+  nft       NFT               @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("nft_transactions")
+}
+
+model Wallet {
+  id        String      @id @default(cuid())
+  address   String      @unique
+  type      WalletType  @default(METAMASK)
+  userId    String
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  
+  // Relations
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("wallets")
+}
+
+model ApiKey {
+  id        String   @id @default(cuid())
+  name      String
+  key       String   @unique
+  userId    String
+  isActive  Boolean  @default(true)
+  lastUsed  DateTime?
+  createdAt DateTime @default(now())
+  
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("api_keys")
+}
+
+model GameReview {
+  id        String   @id @default(cuid())
+  gameId    String
+  rating    Int      // 1-5 stars
+  comment   String?
+  playerName String
+  createdAt DateTime @default(now())
+  
+  // Relations
+  game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  
+  @@map("game_reviews")
+}
+
+// Enums
+enum Role {
+  DEVELOPER
+  PUBLISHER
+  ADMIN
+  PLAYER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BANNED
+}
+
+enum GameStatus {
+  DEVELOPMENT
+  TESTING
+  PUBLISHED
+  MAINTENANCE
+  ARCHIVED
+}
+
+enum NFTRarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum TransactionType {
+  BUY
+  SELL
+  MINT
+  TRANSFER
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum WalletType {
+  METAMASK
+  WALLETCONNECT
+  COINBASE
+}
