@@ -1,12 +1,10 @@
-'use client'
-
 'use client';
 
 import type React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Gamepad2, Shield, Users, Zap } from 'lucide-react';
+import { Eye, EyeOff, Shield, Users, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -55,8 +53,12 @@ export default function SignUpPage() {
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
-                <Gamepad2 className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 flex items-center justify-center">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRStBf8q7JNQ32dvhvnLol0fcFXhvrEuZzav8AsZxg9RTODjMQF73ICLYytLMIJM9Du0qY&usqp=CAU"
+                  alt="iDos Games Logo"
+                  className="w-12 h-12 object-contain"
+                />
               </div>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -80,7 +82,7 @@ export default function SignUpPage() {
                     <Label
                       htmlFor="firstName"
                       className="text-sm font-medium text-gray-700 dark:text-gray-300"
->
+                    >
                       First Name
                     </Label>
                     <Input
@@ -99,7 +101,7 @@ export default function SignUpPage() {
                     <Label
                       htmlFor="lastName"
                       className="text-sm font-medium text-gray-700 dark:text-gray-300"
->
+                    >
                       Last Name
                     </Label>
                     <Input
@@ -120,7 +122,7 @@ export default function SignUpPage() {
                   <Label
                     htmlFor="email"
                     className="text-sm font-medium text-gray-700 dark:text-gray-300"
->
+                  >
                     Email
                   </Label>
                   <Input
@@ -138,7 +140,7 @@ export default function SignUpPage() {
                   <Label
                     htmlFor="password"
                     className="text-sm font-medium text-gray-700 dark:text-gray-300"
->
+                  >
                     Password
                   </Label>
                   <div className="relative">
@@ -157,7 +159,7 @@ export default function SignUpPage() {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
->
+                    >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />
                       ) : (
@@ -171,7 +173,7 @@ export default function SignUpPage() {
                   <Label
                     htmlFor="confirmPassword"
                     className="text-sm font-medium text-gray-700 dark:text-gray-300"
->
+                  >
                     Confirm Password
                   </Label>
                   <div className="relative">
@@ -192,7 +194,7 @@ export default function SignUpPage() {
                         setShowConfirmPassword(!showConfirmPassword)
                       }
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
->
+                    >
                       {showConfirmPassword ? (
                         <EyeOff className="w-5 h-5" />
                       ) : (
@@ -214,19 +216,19 @@ export default function SignUpPage() {
                   <Label
                     htmlFor="terms"
                     className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"
->
+                  >
                     I agree to the{' '}
                     <Link
                       href="/terms"
                       className="text-blue-600 hover:text-blue-500 font-medium"
->
+                    >
                       Terms of Service
                     </Link>{' '}
                     and{' '}
                     <Link
                       href="/privacy"
                       className="text-blue-600 hover:text-blue-500 font-medium"
->
+                    >
                       Privacy Policy
                     </Link>
                   </Label>
@@ -236,7 +238,7 @@ export default function SignUpPage() {
                   type="submit"
                   className="w-full h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200"
                   disabled={!formData.agreeToTerms}
->
+                >
                   Create Account
                 </Button>
               </form>
@@ -245,9 +247,9 @@ export default function SignUpPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Already have an account?{' '}
                   <Link
-                    href="/signin"
+                    href="/auth/signin"
                     className="text-blue-600 hover:text-blue-500 font-medium"
->
+                  >
                     Sign In
                   </Link>
                 </p>
@@ -264,7 +266,11 @@ export default function SignUpPage() {
           <div className="mb-8">
             <div className="flex items-center justify-center mb-4">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                <Gamepad2 className="w-8 h-8 text-white" />
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRStBf8q7JNQ32dvhvnLol0fcFXhvrEuZzav8AsZxg9RTODjMQF73ICLYytLMIJM9Du0qY&usqp=CAU"
+                  alt="iDos Games Logo"
+                  className="w-8 h-8 object-contain"
+                />
               </div>
             </div>
             <h1 className="text-4xl font-bold mb-2">iDOS GAMES</h1>
