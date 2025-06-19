@@ -1,15 +1,6 @@
-'use client';
+"use client"
 
-import Link from 'next/link';
-import {
-  BarChart3,
-  Crown,
-  Gamepad2,
-  LayoutDashboard,
-  Settings,
-  Users,
-  Wallet,
-} from 'lucide-react';
+import { LayoutDashboard, Gamepad2, Users, BarChart3, Wallet, Settings } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -21,48 +12,53 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar"
+import Link from "next/link"
 
 const menuItems = [
   {
-    title: 'Dashboard',
-    url: '/dashboard',
+    title: "Dashboard",
+    url: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    title: 'Games',
-    url: '/games',
+    title: "Games",
+    url: "/games",
     icon: Gamepad2,
   },
   {
-    title: 'Users',
-    url: '/users',
+    title: "Users",
+    url: "/users",
     icon: Users,
   },
   {
-    title: 'Analytics',
-    url: '/analytics',
+    title: "Analytics",
+    url: "/analytics",
     icon: BarChart3,
   },
   {
-    title: 'Web3 & NFTs',
-    url: '/web3',
+    title: "Web3 & NFTs",
+    url: "/web3",
     icon: Wallet,
   },
   {
-    title: 'Settings',
-    url: '/settings',
+    title: "Settings",
+    url: "/settings",
     icon: Settings,
   },
-];
+]
 
 export function AppSidebar() {
   return (
     <Sidebar variant="inset">
       <SidebarHeader>
         <div className="flex items-center gap-3 px-4 py-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <Crown className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 flex items-center justify-center">
+            <img 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRStBf8q7JNQ32dvhvnLol0fcFXhvrEuZzav8AsZxg9RTODjMQF73ICLYytLMIJM9Du0qY&usqp=CAU" 
+              alt="iDos Games Logo" 
+              className="w-8 h-8 object-contain"
+            />
           </div>
           <div>
             <h2 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -72,6 +68,7 @@ export function AppSidebar() {
           </div>
         </div>
       </SidebarHeader>
+      
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -91,9 +88,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter></SidebarFooter>\
-    </Sidebar>
-  );
-}
 
-export default AppSidebar;
+      <SidebarFooter>
+      </SidebarFooter>
+    </Sidebar>
+  )
+}
