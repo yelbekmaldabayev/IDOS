@@ -147,7 +147,7 @@ export default function SignInPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Not a Member yet?{' '}
                   <Link
-                    href="/auth/signup"
+                    href="/signup"
                     className="text-blue-600 hover:text-blue-500 font-medium"
                   >
                     Sign Up
